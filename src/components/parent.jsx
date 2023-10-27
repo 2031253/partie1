@@ -3,57 +3,48 @@ import Enfant from './enfant';
 
 class Parent extends Component {
 
-    state ={
-        valeurActuel : 0 ,
-        valeurEnfantRecu : 0 ,
-        total : 0 
-
+    state = {
+        nombre1: 0,
+        nombre2: 0,
+        total: 0
     }
 
-    sommeTotal=(nombre1 , nombre2)=>{
-        return nombre1 + nombre2;
-    }
-
-    ajouter1Parent=()=>{
-        this.setState((state) => (
+    ajouter1 = () => {
+        this.setState((state)=>(
             {
-                valeurActuel : state.valeurActuel + 1 , 
-                
+                nombre1: state.nombre1 + 1 ,
             }
         ))
-        this.ajusterTotal();
+        this.calculerTotal();
     }
 
-
-    ajusterTotal=()=>{
-        this.setState(()=>(
-            {
-                total : this.state.valeurActuel + this.state.valeurEnfantRecu ,
-            }
-        ))
+    calculerTotal = () => {
+        this.setState({
+            total: this.state.nombre1 + this.state.nombre2
+        })
     }
 
-    recevoirParent =(valeur)=>{
-        this.setState(()=>(
-            {
-                valeurEnfantRecu : valeur
-            }
-        ))
+    recevoir = (infos) => {
+        this.setState({
+            nombre2 : infos
+        })
     }
 
-    render(){
+    render() {
         return (
             <div>
-                <div className='aligne'> 
-                    <button onClick={this.ajouter1Parent}>+1Parent</button>
-                    <p>Parent somme Parent</p>
-                    <input type='number'  readOnly value={this.state.valeurActuel}></input>
-                    <p>Parent somme Enfant</p>
-                    <input type='number'  readOnly value={this.state.valeurEnfantRecu}></input>
-                    <p>Parent somme total</p>
-                    <input type='number'  readOnly  value={this.state.total}></input>
+                <div className='aligne'>
+                    <button onClick={this.ajouter1}>+1Parent</button>
+                    <span> Parent somme Parent </span>
+                    <input type='number' readOnly value={this.state.nombre1}></input>
+                    <span> Parent somme Enfant </span>
+                    <input type='number' readOnly value={this.state.nombre2}></input>
+                    <span> Parent somme total </span>
+                    <input type='number' readOnly value={this.state.total}></input>
                 </div>
-                <Enfant valuerAjouterEnfant={this.state.valeurActuel}  recevoirParent ={this.recevoirParent}/>
+                <br />
+                <br />
+                <Enfant nombre1Envoyer = {this.state.nombre1} nombre3Recu = {this.recevoir}/>
             </div>
         );
     }
